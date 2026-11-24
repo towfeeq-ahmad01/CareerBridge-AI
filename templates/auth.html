@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Create account' if mode == 'register' else 'Sign in' }} — CareerBridge AI{% endblock %}
+{% block content %}
+<section class="auth-wrap container py-5">
+  <div class="auth-card">
+    <div class="text-center mb-4"><span class="auth-icon">✦</span><div class="eyebrow mt-3">{{ 'GET STARTED' if mode == 'register' else 'WELCOME BACK' }}</div><h1 class="h2 mt-2">{{ 'Create your account' if mode == 'register' else 'Sign in to your account' }}</h1><p class="text-secondary">{{ 'Start building a career plan that fits you.' if mode == 'register' else 'Your opportunities and progress are waiting.' }}</p></div>
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      {% if mode == 'register' %}<div class="mb-3"><label class="form-label" for="full_name">Full name</label><input class="form-control" id="full_name" name="full_name" required maxlength="120" autocomplete="name" value="{{ request.form.get('full_name','') }}"></div>{% endif %}
+      <div class="mb-3"><label class="form-label" for="email">Email address</label><input class="form-control" id="email" name="email" type="email" required maxlength="255" autocomplete="email" value="{{ request.form.get('email','') }}"></div>
+      <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control" id="password" name="password" type="password" required minlength="10" maxlength="256" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}"><div class="form-text">{% if mode == 'register' %}Use 10–256 characters.{% endif %}</div></div>
+      {% if mode == 'login' %}<div class="form-check mb-3"><input class="form-check-input" id="remember" name="remember" type="checkbox"><label class="form-check-label" for="remember">Keep me signed in</label></div>{% endif %}
+      <button class="btn btn-primary w-100 btn-lg" type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }}</button>
+    </form>
+    <p class="text-center text-secondary mt-4 mb-0">{{ 'Already have an account?' if mode == 'register' else 'New to CareerBridge?' }} <a href="{{ url_for('main.login' if mode == 'register' else 'main.register') }}">{{ 'Sign in' if mode == 'register' else 'Create an account' }}</a></p>
+  </div>
+</section>
+{% endblock %}

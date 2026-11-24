@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}CareerBridge AI — Build your next step{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container py-5 py-lg-6">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="eyebrow"><span class="pulse-dot"></span> Your career journey, connected</span>
+        <h1 class="display-4 fw-bold mt-3">Turn your potential into your <span class="text-gradient">next opportunity.</span></h1>
+        <p class="lead text-secondary mt-3 mb-4">Understand your strengths, find roles that fit, and take practical steps toward a career you’re excited about.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a class="btn btn-primary btn-lg" href="{{ url_for('main.register') }}">Build my career profile <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('main.jobs') }}">Explore opportunities</a>
+        </div>
+        <div class="hero-trust mt-4"><span>✓ Resume insights</span><span>✓ Explainable matching</span><span>✓ Progress tracking</span></div>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-card">
+          <div class="d-flex justify-content-between align-items-center"><div><div class="small text-muted">YOUR CAREER SNAPSHOT</div><h5 class="mb-0 mt-1">A plan that moves with you</h5></div><span class="sparkle">✦</span></div>
+          <div class="snapshot-score mt-4"><div class="snapshot-circle">AI</div><div><strong>Skills to opportunities</strong><div class="small text-muted">A transparent path forward</div></div></div>
+          <div class="snapshot-line mt-4"><span>Profile</span><span class="text-primary">Build your strengths</span></div><div class="progress slim"><div class="progress-bar" style="width:72%"></div></div>
+          <div class="snapshot-line mt-3"><span>Discover</span><span class="text-success">Explore matched roles</span></div><div class="progress slim"><div class="progress-bar bg-success" style="width:54%"></div></div>
+          <div class="recommendation-mini mt-4"><span class="mini-icon">✧</span><div><strong>Next step</strong><div class="small text-muted">Find skills that move you closer to your goals.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-heading text-center"><span class="eyebrow">A practical toolkit</span><h2 class="mt-2">Everything you need to move forward</h2><p class="text-secondary">From a stronger resume to a confident interview, make each step count.</p></div>
+  <div class="row g-3 mt-4">
+    {% set features = [
+      ('01','Resume clarity','Get skill and section-level feedback on your PDF resume.','/resume','violet'),
+      ('02','Better-fit roles','See why jobs and internships line up with your skills.','/jobs','blue'),
+      ('03','Skills that matter','Compare your strengths with the skills employers request.','/skills','green'),
+      ('04','A learning path','Turn skill gaps into manageable learning goals.','/roadmap','orange')
+    ] %}
+    {% for number,title,description,link,tone in features %}
+    <div class="col-md-6 col-lg-3"><a class="feature-card {{ tone }}" href="{{ link }}"><span class="feature-number">{{ number }}</span><div class="feature-icon">✦</div><h5>{{ title }}</h5><p>{{ description }}</p><span class="card-arrow">Explore →</span></a></div>
+    {% endfor %}
+  </div>
+</section>
+<section class="container py-4">
+  <div class="d-flex align-items-end justify-content-between mb-3"><div><span class="eyebrow">Fresh opportunities</span><h2 class="mt-2 mb-0">Start exploring</h2></div><a href="{{ url_for('main.jobs') }}" class="text-decoration-none fw-semibold">View all jobs →</a></div>
+  <div class="row g-3">{% for job in jobs %}<div class="col-md-4"><div class="listing-card h-100"><span class="badge-soft">{{ job.category }}</span><h5 class="mt-3">{{ job.title }}</h5><p class="text-muted mb-1">{{ job.company }} · {{ job.location }}</p><p class="small text-secondary">{{ job.description|truncate(115) }}</p><a href="{{ url_for('main.opportunity_detail', kind='job', opportunity_id=job.id) }}" class="stretched-link">View opportunity</a></div></div>{% else %}<div class="col-12"><p class="text-muted">Run <code>flask --app app init-db</code> to load the sample catalog.</p></div>{% endfor %}</div>
+</section>
+<section class="container py-5">
+  <div class="cta-band"><div><span class="eyebrow text-white-50">Your next chapter starts here</span><h2 class="text-white mt-2">Make your skills visible. Make your next move count.</h2></div><a class="btn btn-light" href="{{ url_for('main.register') }}">Create your free profile →</a></div>
+</section>
+{% endblock %}
